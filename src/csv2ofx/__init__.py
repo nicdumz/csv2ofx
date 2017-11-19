@@ -148,7 +148,7 @@ class csv2ofx(wx.App):
             self.frame,
             message="Open CSV File",
             wildcard="CSV Files (*.csv)|*.csv|All Files (*.*)|*.*",
-            style=wx.OPEN|wx.CHANGE_DIR,            
+            style=wx.FD_OPEN|wx.FD_CHANGE_DIR,
         )
         if dlg.ShowModal() == wx.ID_OK:
             path=dlg.GetPath()
@@ -193,7 +193,7 @@ class csv2ofx(wx.App):
             self.frame,
             message='Export File',
             wildcard="QIF Files (*.qif)|*.qif|OFX Files (*.ofx)|*.ofx|All Files (*.*)|*.*", 
-            style=wx.SAVE|wx.CHANGE_DIR,
+            style=wx.FD_SAVE|wx.FD_CHANGE_DIR,
 	    defaultDir=os.path.dirname(self.opened_path),
             defaultFile=os.path.basename(self.opened_path).replace('csv',format.lower()) 
         )
