@@ -18,6 +18,10 @@ class SimpleCSVGrid(GridTableBase):
         self.grid_contents = [row for row in csv_reader if len(row)>0]
         if skip_last:
             self.grid_contents=self.grid_contents[:-skip_last]
+        # Some csv files have the great idea to tell us which
+        # separators/delimiters they use, as the first line.
+        if self.grid_contents[0][0].startswith('sep='):
+            self.grid_contents=self.grid_contents[1:]
         
         # the 1st row is the column headers
         self.grid_cols = len(self.grid_contents[0])
