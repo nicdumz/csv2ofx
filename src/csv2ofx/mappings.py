@@ -183,7 +183,7 @@ def ubs_toDescription(desc1,desc2,desc3):
 ubs = {
     '_params':{
         'delimiter': ';',
-        'skip_last': 1
+        'skip_last': 2
     },
     'OFX':{
         'skip':lambda row,grid: False,
