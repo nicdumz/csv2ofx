@@ -154,9 +154,11 @@ cu = {
 }
 
 def ubs_toOFXDate(date):
+    if not date: return None
     return datetime.strptime(date,'%d.%m.%Y').strftime('%Y%m%d')
 
 def ubs_toQIFDate(date):
+    if not date: return None
     return datetime.strptime(date,'%d.%m.%Y').strftime('%m/%d/%Y')
 
 def ubs_toAmount(debit,credit):
@@ -167,13 +169,11 @@ def ubs_toAmount(debit,credit):
       amount += float(credit.replace('\'',''))
     return amount
 
-def ubs_toPayee(enteredby,recipient,description):
-    if enteredby:
-      return enteredby
-    elif recipient:
-      return recipient
-    elif description:
-      return description
+def ubs_toPayee(first,second):
+    if first:
+      return first
+    elif second:
+      return second
     else:
       return 'UBS'
 
@@ -192,7 +192,7 @@ ubs = {
         'DTPOSTED':lambda row,grid: ubs_toOFXDate(fromCSVCol(row,grid,'Value date')),
         'TRNAMT':lambda row,grid: ubs_toAmount(fromCSVCol(row,grid,'Debit'),fromCSVCol(row,grid,'Credit')),
         'FITID':lambda row,grid: row,
-        'PAYEE':lambda row,grid: ubs_toPayee(fromCSVCol(row,grid,'Entered by'),fromCSVCol(row,grid,'Recipient')),
+        'PAYEE':lambda row,grid: ubs_toPayee(fromCSVCol(row,grid,'Description 3'),fromCSVCol(row,grid,'Description 2')),
         'MEMO':lambda row,grid: ubs_toDescription(fromCSVCol(row,grid,'Description 1'),
                                                   fromCSVCol(row,grid,'Description 2'),
                                                   fromCSVCol(row,grid,'Description 3')),
@@ -204,9 +204,8 @@ ubs = {
         'Account':lambda row,grid: 'UBS',
         'AccountDscr':lambda row,grid: fromCSVCol(row,grid,'Description'),
         'Date':lambda row,grid: ubs_toQIFDate(fromCSVCol(row,grid,'Value date')),
-        'Payee':lambda row,grid: ubs_toPayee(fromCSVCol(row,grid,'Entered by'),
-                                             fromCSVCol(row,grid,'Recipient'),
-                                             fromCSVCol(row,grid,'Description 3')),
+        'Payee':lambda row,grid: ubs_toPayee(fromCSVCol(row,grid,'Description 3'),
+                                             fromCSVCol(row,grid,'Description 2')),
         'Memo':lambda row,grid: ubs_toDescription(fromCSVCol(row,grid,'Description 1'),
                                                   fromCSVCol(row,grid,'Description 2'),
                                                   fromCSVCol(row,grid,'Description 3')),
