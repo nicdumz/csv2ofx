@@ -3,16 +3,16 @@
 from datetime import datetime
 import csv
 
-from wx.grid import GridTableBase
+from wx.grid import GridStringTable
 
 
-class SimpleCSVGrid(GridTableBase):
+class SimpleCSVGrid(GridStringTable):
     """
         A very basic instance that allows the csv contents to be used
         in a wx.Grid
     """
     def __init__(self,csv_path,delimiter=',',skip_last=0):
-        GridTableBase.__init__(self)
+        GridStringTable.__init__(self)
           # delimiter, quote could come from config file perhaps
         csv_reader = csv.reader(open(csv_path,'r'),delimiter=delimiter,quotechar='"')
         self.grid_contents = [row for row in csv_reader if len(row)>0]
